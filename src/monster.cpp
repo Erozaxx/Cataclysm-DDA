@@ -2673,6 +2673,12 @@ units::volume monster::get_volume() const
     return units::operator*( type->volume, get_size() / type->size );
 }
 
+units::length monster::get_length() const
+{
+    return units::operator*( type->longest_side, get_size() / type->size );
+}
+
+
 void monster::add_msg_if_npc( const std::string &msg ) const
 {
     if( g->u.sees( *this ) ) {

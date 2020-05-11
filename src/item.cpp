@@ -4656,13 +4656,27 @@ units::mass item::weight( bool, bool integral ) const
     return ret;
 }
 
+// corpse longest side helper for  item::length
+units::length item::corpse_length( const mtype *corpse ) const
+{
+    units::length corpse_length = corpse->longest_side;
+    if( has_flag( flag_QUARTERED ) ) {
+        corpse_length /= 4;
+    }
+    if( corpse_length > 0_mm ) {
+        return corpse_length;
+    }
+    debugmsg( "invalid monster length for corpse sending default from volume" );
+    return units::default_length_from_volume<int>( corpse->volume );
+}
+
 units::length item::length() const
 {
     if( made_of( LIQUID ) || is_soft() ) {
         return 0_mm;
     }
     if( is_corpse() ) {
-        return units::default_length_from_volume<int>( corpse->volume );
+        return corpse_length( corpse );
     }
     return type->longest_side;
 }
@@ -4688,6 +4702,8 @@ units::volume item::corpse_volume( const mtype *corpse ) const
     debugmsg( "invalid monster volume for corpse" );
     return 0_ml;
 }
+
+
 
 units::volume item::base_volume() const
 {

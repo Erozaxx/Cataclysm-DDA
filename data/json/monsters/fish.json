@@ -225,6 +225,7 @@
     "id": "mon_fish_rainbow_trout",
     "type": "MONSTER",
     "copy-from": "mon_fish_medium",
+    "average_length" : "16 cm",
     "name": { "str": "rainbow trout" },
     "looks_like": "mon_fish_trout",
     "description": "A rainbow trout.  A fish made popular by father-son fishing trips, except for the part where you have to gut it."

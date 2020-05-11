@@ -704,6 +704,7 @@ void mtype::load( const JsonObject &jo, const std::string &src )
     assign( jo, "bodytype", bodytype );
     assign( jo, "color", color );
     assign( jo, "volume", volume, strict, 0_ml );
+    assign( jo, "average_length", longest_side );
     assign( jo, "weight", weight, strict, 0_gram );
 
     optional( jo, was_loaded, "phase", phase, make_flag_reader( gen.phase_map, "phase id" ), SOLID );

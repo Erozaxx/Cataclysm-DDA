@@ -246,6 +246,7 @@ struct mtype {
         nc_color color = c_white;
         m_size size;
         units::volume volume;
+        units::length longest_side = -1_mm;
         units::mass weight;
         phase_id phase;
 

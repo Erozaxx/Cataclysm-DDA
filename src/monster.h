@@ -111,6 +111,7 @@ class monster : public Creature
         units::mass get_weight() const override;
         units::mass weight_capacity() const override;
         units::volume get_volume() const;
+        units::length get_length() const;
         int get_hp( hp_part ) const override;
         int get_hp() const override;
         int get_hp_max( hp_part ) const override;

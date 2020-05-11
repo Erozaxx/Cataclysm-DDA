@@ -542,6 +542,10 @@ class item : public visitable<item>
         /** Volume check for corpses, helper for base_volume(). */
         units::volume corpse_volume( const mtype *corpse ) const;
 
+
+        /** Length check for corpses, helper for length(). */
+        units::length corpse_length( const mtype *corpse ) const;
+
         /** Required strength to be able to successfully lift the item unaided by equipment */
         int lift_strength() const;
 
