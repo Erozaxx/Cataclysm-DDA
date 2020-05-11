@@ -1,3 +1,4 @@
+#include <cmath>
 #include <initializer_list>
 #include <limits>
 #include <memory>
@@ -7,6 +8,7 @@
 #include "enums.h"
 #include "item.h"
 #include "itype.h"
+#include "item_factory.h"
 #include "ret_val.h"
 #include "units.h"
 #include "value_ptr.h"
@@ -155,5 +157,30 @@ TEST_CASE( "stacking_over_time", "[item]" )
                 CHECK( !A.stacks_with( B ) );
             }
         }
+    }
+}
+static void assert_minimum_length_to_volume_ratio( const item &target )
+{
+    // Minimum possible length is if the item is a sphere.
+    const float minimal_diameter = std::cbrt( ( 3.0 * units::to_milliliter( target.volume() ) ) /
+                                   ( 4.0 * M_PI ) );
+    CAPTURE( target.type->get_id() );
+    CAPTURE( target.volume() );
+    CHECK( units::to_centimeter( target.length() ) >= minimal_diameter );
+}
+
+TEST_CASE( "item length sanity check", "[item]" )
+{
+    for( const itype *type : item_controller->all() ) {
+        const item sample( type );
+        assert_minimum_length_to_volume_ratio( sample );
+    }
+}
+
+TEST_CASE( "corpse length sanity check", "[item]" )
+{
+    for( const mtype &type : MonsterGenerator::generator().get_all_mtypes() ) {
+        const item sample = item::make_corpse( type.id );
+        assert_minimum_length_to_volume_ratio( sample );
     }
 }
