@@ -4666,8 +4666,12 @@ units::length item::corpse_length( const mtype *corpse ) const
     if( corpse_length > 0_mm ) {
         return corpse_length;
     }
-    debugmsg( "invalid monster length for corpse sending default from volume" );
-    return units::default_length_from_volume<int>( corpse->volume );
+    if( corpse->volume  > 0_ml ) {
+            return units::default_length_from_volume<int>( corpse->volume );
+    }
+    debugmsg( "invalid monster length for corpse sending -1_mm" );
+
+    return -1_mm;
 }
 
 units::length item::length() const
